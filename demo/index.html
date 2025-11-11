@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standalone Terminal Demo</title>
+    <link rel="stylesheet" href="../css/terminal.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .terminal-wrapper {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        #terminal-container {
+            height: 600px;
+        }
+
+        .controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .btn {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #00cc00;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,255,0,0.3);
+        }
+
+        .info {
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>Standalone Terminal Demo</h1>
+
+        <div class="terminal-wrapper">
+            <div id="terminal-container"></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="terminal.reset()">Reset Terminal</button>
+            <button class="btn" onclick="location.reload()">Reload Page</button>
+        </div>
+
+        <div class="info">
+            This is a fully standalone, embeddable Linux terminal emulator.<br>
+            Try commands like: ls, cd, cat, ssh, nmap, and more!
+        </div>
+    </div>
+
+    <script type="module">
+        import { StandaloneTerminal } from '../js/standalone-terminal.js';
+
+        // Create terminal instance
+        window.terminal = new StandaloneTerminal('terminal-container', {
+            welcomeMessage: 'Welcome to Standalone Terminal Demo v1.0',
+            helpMessage: "Type 'help' for available commands"
+        });
+    </script>
+</body>
+</html>

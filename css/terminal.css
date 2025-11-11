@@ -1,0 +1,116 @@
+/* Standalone Terminal Styles - Embeddable anywhere */
+
+.standalone-terminal-container {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid #003300;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+}
+
+.standalone-terminal-body {
+    flex: 1;
+    overflow-y: auto;
+    color: #00ff00;
+    font-size: 14px;
+    line-height: 1.4;
+    cursor: text;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.standalone-terminal-inner-content {
+    box-sizing: border-box;
+}
+
+.standalone-terminal-input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    line-height: 20px;
+    height: 20px;
+}
+
+.standalone-terminal-frozen-line {
+    margin-top: 5px;
+    margin-bottom: 0;
+    line-height: 20px;
+    height: 20px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    user-select: text;
+}
+
+.standalone-terminal-prompt {
+    color: #00ff00;
+    margin-right: 8.5px;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.standalone-terminal-frozen-prompt {
+    color: #00ff00;
+    margin-right: 8px;
+    white-space: nowrap;
+    user-select: text;
+}
+
+.standalone-terminal-input {
+    background: transparent;
+    border: none;
+    color: #00ff00;
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    outline: none;
+    flex: 1;
+    caret-color: #00ff00;
+    margin-bottom: 0px;
+}
+
+.standalone-terminal-command-history {
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    color: #00ff00;
+    padding: 0 0 0 2px;
+    margin: 0;
+    border: none;
+    outline: none;
+    display: inline-block;
+    white-space: pre-wrap;
+    word-break: break-all;
+    flex: 1;
+}
+
+.standalone-terminal-output {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 20px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    user-select: text;
+}
+
+/* Terminal scrollbar styling */
+.standalone-terminal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.standalone-terminal-body::-webkit-scrollbar-track {
+    background: #00AA00;
+}
+
+.standalone-terminal-body::-webkit-scrollbar-thumb {
+    background: #00FF00;
+    border-radius: 4px;
+}
+
+.standalone-terminal-body::-webkit-scrollbar-thumb:hover {
+    background: #00CC00;
+}
