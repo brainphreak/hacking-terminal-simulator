@@ -1,210 +1,303 @@
-# Standalone Terminal - Embeddable Linux Terminal Emulator
+# Hacking Terminal Simulator
 
-A fully functional, self-contained Linux terminal emulator that can be embedded in any website.
+A fully-featured Linux terminal emulator built in JavaScript with realistic command behavior, virtual filesystem, SSH simulation, and extensive hacking tools.
 
-## Features
 
-- **Zero Dependencies**: No external libraries required
-- **Full Linux Command Support**: Includes ls, cd, cat, grep, ssh, nmap, and 50+ more commands
-- **SSH Simulation**: Connect to simulated remote hosts
-- **Tab Completion**: File and command auto-completion
-- **Command History**: Navigate through command history with arrow keys
-- **Virtual Filesystem**: Complete filesystem with /home, /etc, /bin, /usr, /var
-- **User Management**: Support for su, sudo, useradd
-- **Network Tools**: ping, traceroute, nmap, netstat, ifconfig
-- **Customizable**: Easy to style and configure
+## Examples
 
-## Quick Start
+See the `demo/index.html` file for a complete working example.
 
-### 1. Include the Files
+See it live at www.brainphreak.net 
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="css/terminal.css">
-</head>
-<body>
-    <div id="my-terminal" style="width: 800px; height: 600px;"></div>
 
-    <script type="module">
-        import { StandaloneTerminal } from './js/standalone-terminal.js';
+## Core Features
 
-        const terminal = new StandaloneTerminal('my-terminal', {
-            welcomeMessage: 'Welcome to My Terminal',
-            helpMessage: "Type 'help' for commands"
-        });
-    </script>
-</body>
-</html>
-```
+- **Virtual Filesystem:** Complete directory structure with /home, /etc, /usr/bin, /var, and more
+- **Multi-User System:** Switch between users with su/sudo, persistent user sessions
+- **Command History:** Arrow keys to navigate through command history (per-user)
+- **Tab Completion:** Auto-complete commands and file paths
+- **Environment Variables:** PATH, HOME, USER, CWD, OLDPWD support
+- **Piping:** Chain commands together using pipes (|)
+- **Output Redirection:** Redirect output with > and >>
+- **SSH Simulation:** Connect to remote hosts with persistent sessions
+- **Interactive Commands:** Commands like more, less, top with keyboard navigation
+- **Ctrl+C Support:** Interrupt long-running commands
 
-### 2. File Structure
+## File Operations
 
-```
-your-project/
-├── css/
-│   └── terminal.css
-├── js/
-│   ├── standalone-terminal.js
-│   ├── terminal_commands.js
-│   └── terminal_filesystem.js
-└── index.html
-```
-
-## API Reference
-
-### Constructor
-
-```javascript
-new StandaloneTerminal(containerId, options)
-```
-
-**Parameters:**
-- `containerId` (string): The ID of the HTML element to render the terminal in
-- `options` (object, optional):
-  - `welcomeMessage` (string): Welcome message shown on startup
-  - `helpMessage` (string): Help text shown on startup
-
-**Example:**
-```javascript
-const terminal = new StandaloneTerminal('terminal-container', {
-    welcomeMessage: 'Welcome to My Custom Terminal',
-    helpMessage: 'Type help for commands'
-});
-```
-
-### Methods
-
-#### `reset()`
-Resets the terminal to initial state, clearing all output and resetting to default user.
-
-```javascript
-terminal.reset();
-```
-
-#### `destroy()`
-Removes the terminal from the DOM completely.
-
-```javascript
-terminal.destroy();
-```
-
-## Supported Commands
-
-### File System
-- `ls` - List directory contents
-- `cd` - Change directory
+- `ls` - List directory contents (-l for long format, -a for hidden files)
+- `cd` - Change directory (supports ~, .., -, absolute/relative paths)
 - `pwd` - Print working directory
-- `cat` - Display file contents
-- `touch` - Create file
-- `mkdir` - Create directory
-- `rm` - Remove files/directories
-- `cp` - Copy files
-- `mv` - Move/rename files
-- `find` - Search for files
-- `grep` - Search file contents
+- `cat` - Display file contents (supports piping)
+- `head` - Show first N lines (-n flag, default 10)
+- `tail` - Show last N lines (-n flag, default 10)
+- `more` - Paginate file contents (space for next page, q to quit)
+- `less` - Enhanced pager (currently aliases to more)
+- `touch` - Create empty files
+- `find` - Search for files (-name pattern, -type f/d)
+- `grep` - Search file contents with regex patterns (supports piping)
+- `chmod` - Change file permissions (simulated)
+- `chown` - Change file ownership (simulated)
+- `tar` - Create/extract archives (-czf to create, -xzf to extract, -v for verbose)
+- `gzip` - Compress/decompress files (-d to decompress)
 
-### System
-- `whoami` - Show current user
+## Network Tools
+
+- `ping` - Test network connectivity with realistic RTT and packet loss
+- `nmap` - Port scanner with service detection (-p for ports, -sV for services)
+- `traceroute` - Trace network path to destination
+- `tcpdump` - Network packet analyzer
+- `ssh` - Secure shell to remote hosts (creates persistent sessions)
+- `scp` - Secure copy files between hosts
+- `curl` - Transfer data from URLs (-I for headers, -o for output file)
+- `wget` - Download files with animated progress bar (-O for output)
+- `nc` - Netcat for port scanning (-zv), listening (-l -p), and banner grabbing
+- `telnet` - Connect to services and view banners
+- `ifconfig` - Display network interface configuration (shows eth0, lo, wlan0)
+- `netstat` - Show network connections (dynamic based on activity)
+- `route` - Display routing table
+- `whois` - Domain registration information lookup
+- `nslookup` - DNS query tool
+- `dig` - Advanced DNS lookup (A, AAAA, MX, NS, TXT, SOA records)
+- `host` - Simple DNS lookup (-t for record type)
+- `arp` - View ARP table with MAC addresses
+- `iptables` - Firewall configuration (simulated)
+
+## Wireless Tools
+
+- `iwconfig` - Display wireless network interface configuration
+- `airodump-ng` - WiFi packet capture tool for WPA2 handshake collection
+  - Full-screen real-time display with live beacon/data counters
+  - `-w prefix` - Write capture file (required for handshake capture)
+  - `-c channel` - Target specific channel
+  - `--bssid MAC` - Filter by specific access point
+  - Automatically captures WPA2 handshakes from networks with clients
+  - Shows handshake capture indicator: `[ WPA handshake: BSSID ]`
+  - Press Ctrl+C to stop and save capture file
+- `aircrack-ng` - WPA/WPA2 password cracker using dictionary attacks
+  - `-w wordlist` - Specify wordlist file (e.g., /usr/share/wordlists/common.txt)
+  - `-b bssid` - Target specific access point
+  - `-e essid` - Target specific network name
+  - Cracks WiFi passwords from captured handshake files
+  - Shows real-time progress and key when found
+
+## Available WiFi Networks
+
+| ESSID | BSSID | Channel | Password | Has Clients |
+|-------|-------|---------|----------|-------------|
+| SecureNet-5G | 00:14:6C:7E:40:80 | 36 | securenet123 | No |
+| HomeNetwork | A4:08:F5:2D:39:E1 | 6 | password123 | Yes |
+| CoffeeShop | C8:3A:35:B0:24:68 | 11 | coffeeshop | No |
+| Guest_WiFi | F4:EC:38:D1:5A:7C | 1 | guestwifi | Yes |
+
+## Security & Hacking Tools
+
+- `john` - John the Ripper password cracker
+  - `--wordlist=FILE` - Use wordlist for dictionary attack (required)
+  - `--show` - Display previously cracked passwords
+  - Cracks /etc/shadow format with SHA-512 hashes
+  - Animated progress with realistic speed metrics
+  - Wordlist: /usr/share/wordlists/common.txt (600+ passwords)
+  - Supports Ctrl+C to abort cracking
+- `hashcat` - GPU-based password cracker (simulates dictionary attacks)
+- `strings` - Extract printable strings from binaries (includes hidden flags)
+- `base64` - Encode/decode base64 (-d to decode)
+- `md5sum` - Calculate MD5 hashes of files
+- `sha256sum` - Calculate SHA256 hashes of files
+- `openssl` - Cryptography toolkit
+  - `openssl version` - Show version (-a for all info)
+  - `openssl rand` - Generate random data (-hex, -base64)
+  - `openssl s_client` - SSL/TLS client (-connect host:port)
+  - `openssl passwd` - Generate password hashes
+  - `openssl base64` - Base64 encoding/decoding
+
+## System Information
+
+- `whoami` - Display current username
 - `hostname` - Show system hostname
-- `uname` - System information
-- `ps` - Process list
-- `top` - System monitor
-- `kill` - Terminate processes
-- `history` - Command history
+- `uname` - Print system information (-a for all)
+- `date` - Display current date and time
+- `w` - Show who is logged in and what they're doing
+- `who` - Display logged-in users
+- `ps` - List running processes
+- `top` - Interactive process viewer (P for CPU sort, M for memory, N for PID, R to refresh, q to quit)
+- `history` - View command history
 
-### Network
-- `ping` - Test network connectivity
-- `ssh` - Connect to remote hosts
-- `traceroute` - Trace network route
-- `nmap` - Network scanner
-- `netstat` - Network statistics
-- `ifconfig` - Network interfaces
-- `wget` - Download files
-- `curl` - Transfer data
+## User Management
 
-### User Management
-- `su` - Switch user
-- `sudo` - Execute as superuser
-- `useradd` - Add user
-- `passwd` - Change password
-- `exit` - Exit current session
+- `su` - Switch user (requires password authentication)
+- `sudo` - Execute commands as root
+- `useradd` - Add new users (root only, -p for password)
+- `exit` - Exit current user session or close terminal
 
-### Text Processing
-- `more` - Paginate text
-- `less` - Advanced paging
-- `head` - Show file start
-- `tail` - Show file end
-- `wc` - Word count
-- `sort` - Sort lines
+## Package Management
 
-### Utilities
-- `echo` - Print text
-- `clear` - Clear screen
-- `help` - Show available commands
-- `which` - Locate commands
-- `env` - Show environment
+- `apt` - Debian package manager (install, update, upgrade, remove)
+- `dpkg` - Low-level package manager (-l to list, -i to install)
+
+## Other Utilities
+
+- `echo` - Display text or variables
+- `clear` - Clear terminal screen
 - `export` - Set environment variables
+- `env` - Display all environment variables
+- `bash` - Start new bash shell
+- `which` - Locate command executables in PATH
+- `help` - Display available commands
 
-## Customization
+## Advanced Features
 
-### Styling
+### Piping Examples
 
-The terminal can be styled using CSS. All classes are prefixed with `standalone-terminal-`:
+```bash
+# View large file with pagination
+cat /etc/passwd | more
 
-```css
-.standalone-terminal-container {
-    /* Main container */
-}
+# Search and paginate
+ls -la | grep "txt" | more
 
-.standalone-terminal-body {
-    /* Terminal content area */
-    background-color: #000;
-    color: #0f0;
-}
+# Get first 5 lines
+cat file.txt | head -5
 
-.standalone-terminal-prompt {
-    /* Command prompt */
-    color: #0f0;
-}
+# Search and show last matches
+cat log.txt | grep "error" | tail -10
 
-.standalone-terminal-output {
-    /* Command output */
-}
+# Complex pipeline
+ls -la | grep "\\.txt" | head -20 | grep "user"
+
+# Pipe network output
+nmap google.com | grep "open"
+
+# With output redirection
+cat file.txt | grep "pattern" > output.txt
 ```
 
-### Colors
+### SSH Features
 
-Override the default green terminal theme:
+- **Persistent Sessions:** SSH connections maintain separate filesystem state
+- **Hidden Files:** Each SSH target contains unique hidden files with sensitive data
+- **Easter Eggs:** Special files on hostname-specific servers:
+  - **gibson:** .wargames, HACK_THE_PLANET.txt
+  - **matrix:** .red_pill, .rabbit_hole
+  - **fsociety/ecorp:** .fsociety.dat, wellick_notes.txt
+- **Exposed Secrets:** Find .env files, .passwords.txt, shadow.bak, .bash_history with sensitive commands
 
-```css
-.standalone-terminal-body {
-    background-color: #1a1a1a;
-    color: #ffffff;
-}
+### DNS & Network Simulation
 
-.standalone-terminal-prompt,
-.standalone-terminal-input {
-    color: #00bfff; /* Blue theme */
-}
+- **Consistent IPs:** Hostnames resolve to the same IP every time using hash-based generation
+- **DNS Cache:** Recently queried domains are cached and appear in netstat/arp
+- **Service Detection:** nmap and nc detect realistic service banners
+- **Well-Known Hosts:** google.com, github.com, stackoverflow.com have realistic public IPs
+
+### Password Cracking Simulation
+
+- **john:** Cracks shadow file format with common passwords (123456, password, admin, letmein, etc.)
+- **hashcat:** Simulates GPU cracking with OpenCL detection and rockyou.txt dictionary
+- **Realistic Output:** Animated progress with speed metrics and statistics
+
+## File System Structure
+
+```
+/
+├── home/
+│   ├── root/          (root user home)
+│   ├── user/          (regular user)
+│   └── brainphreak/   (main user)
+├── etc/
+│   ├── hosts          (hostname to IP mappings)
+│   ├── passwd         (user accounts)
+│   ├── shadow         (password hashes)
+│   └── sudoers        (sudo permissions)
+├── usr/
+│   ├── bin/           (executables)
+│   └── share/         (shared data)
+├── var/
+│   └── log/           (system logs)
+├── tmp/               (temporary files)
+└── bin/               (essential binaries)
 ```
 
-### Important: Prompt Spacing
+## Default Users & Passwords
 
-The terminal uses precise spacing to prevent "wiggle" (text shifting when commands are entered). The key values are:
+| Username | Password | Permissions | Notes |
+|----------|----------|-------------|-------|
+| user | 123456 | Sudo access | Default login, can crack with john |
+| brainphreak | letmein | Sudo access | Can crack with john |
+| root | password | Full access | Can crack with john |
 
-```css
-.standalone-terminal-prompt {
-    margin-right: 8.5px; /* Critical - prevents horizontal wiggle */
-}
+*All passwords are in /usr/share/wordlists/common.txt and can be cracked from /etc/shadow using john*
 
-.standalone-terminal-input {
-    margin-bottom: 0px; /* Critical - prevents vertical wiggle */
-}
+## Tips & Tricks
+
+- **Tab Completion:** Press Tab to auto-complete commands and file paths
+- **Command History:** Use Up/Down arrows to cycle through previous commands
+- **Interrupt:** Press Ctrl+C to stop running commands like ping, wget, john, hashcat
+- **Hidden Files:** Use `ls -a` to view hidden files (starting with .)
+- **Variables:** Use $USER, $HOME, $PATH in commands
+- **Change Directory:** Use `cd -` to go back to previous directory
+- **Home Shortcut:** Use `cd ~` or just `cd` to go home
+- **SSH Exploration:** Try ssh to different hostnames to find easter eggs
+- **Password Cracking:** SSH to servers, find shadow files, use john/hashcat to crack
+
+## Example Workflow: Hack a Server
+
+```bash
+# 1. Scan for open SSH port
+nmap -p 22 target.com
+
+# 2. Connect via SSH
+ssh admin@target.com
+
+# 3. Look for hidden files
+ls -la
+
+# 4. Find password files
+cat .passwords.txt
+cat shadow.bak
+
+# 5. Download the shadow file (exit SSH first)
+exit
+scp admin@target.com:shadow.bak ./
+
+# 6. Crack passwords with wordlist
+john --wordlist=/usr/share/wordlists/common.txt /etc/shadow
+
+# 7. View cracked passwords
+john --show /etc/shadow
+
+# 8. Login as root with cracked password
+su root
 ```
 
-**Do not modify these values** unless you experience wiggle. If wiggle occurs, adjust by ±0.5px increments.
+## Example Workflow: Crack WiFi Password
+
+```bash
+# 1. Check wireless interface
+iwconfig
+
+# 2. Scan for WiFi networks
+sudo airodump-ng wlan0
+
+# 3. Target specific network and capture handshake
+sudo airodump-ng -w capture --bssid A4:08:F5:2D:39:E1 wlan0
+
+# 4. Wait for handshake capture (shows: [ WPA handshake: A4:08:F5:2D:39:E1 ])
+# Press Ctrl+C when handshake is captured
+
+# 5. Crack the WiFi password
+aircrack-ng -w /usr/share/wordlists/common.txt capture-01.cap
+
+# 6. WiFi password found: password123
+```
+
+## Technical Implementation
+
+- **Language:** Vanilla JavaScript (ES6 modules)
+- **Architecture:** Command pattern with async/await for all commands
+- **Filesystem:** In-memory JSON structure with full POSIX-like paths
+- **Persistence:** Command history saved per-user, DNS cache maintained globally
+- **Determinism:** Hash-based pseudo-random generation for consistent IPs and data
+- **DOM Manipulation:** Direct DOM updates for interactive commands
 
 ## Browser Support
 
@@ -218,41 +311,6 @@ Requires ES6 module support.
 ## License
 
 Open Source GNU GPLv3 - please credit brainphreak.net
-
-## Examples
-
-See the `demo/index.html` file for a complete working example.
-
-See it live at www.brainphreak.net 
-
-### Embedded in a Dashboard
-
-```html
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-    <div id="terminal-1"></div>
-    <div id="terminal-2"></div>
-</div>
-
-<script type="module">
-    import { StandaloneTerminal } from './js/standalone-terminal.js';
-
-    new StandaloneTerminal('terminal-1');
-    new StandaloneTerminal('terminal-2');
-</script>
-```
-
-### With Custom Styling
-
-```html
-<style>
-    #custom-terminal .standalone-terminal-body {
-        background: linear-gradient(135deg, #1e3c72, #2a5298);
-        font-family: 'Fira Code', monospace;
-    }
-</style>
-
-<div id="custom-terminal"></div>
-```
 
 ## Support
 
