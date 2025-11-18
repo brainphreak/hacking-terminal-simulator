@@ -9,6 +9,7 @@ See the `demo/index.html` file for a complete working example.
 
 See it live at www.brainphreak.net 
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F2F35TO7X)
 
 ## Core Features
 
