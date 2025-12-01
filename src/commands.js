@@ -5187,10 +5187,26 @@ async function processCommand(cmd, {
     // Use prompt element text content, or fall back to getPromptText function
     const promptText = prompt ? prompt.textContent : (getPromptText ? getPromptText() : '');
 
-    // Create frozen command line
+    // Create frozen command line with separate styled spans
     const frozenLine = document.createElement('div');
     frozenLine.className = 'tk-terminal-frozen-line';
-    frozenLine.textContent = promptText + cmd;
+
+    // Create prompt span (themed color)
+    const promptSpan = document.createElement('span');
+    promptSpan.className = 'tk-terminal-frozen-prompt';
+    if (prompt) {
+        promptSpan.innerHTML = prompt.innerHTML;
+    } else {
+        promptSpan.textContent = promptText;
+    }
+
+    // Create command span (always green)
+    const cmdSpan = document.createElement('span');
+    cmdSpan.className = 'tk-terminal-frozen-cmd';
+    cmdSpan.textContent = cmd;
+
+    frozenLine.appendChild(promptSpan);
+    frozenLine.appendChild(cmdSpan);
     inputLine.parentNode.replaceChild(frozenLine, inputLine);
 
     terminalBody.focus();

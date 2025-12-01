@@ -53,9 +53,10 @@
 
 .terminal-embed-prompt-line {
     display: flex;
-    align-items: center;
-    margin: 5px 0;
+    align-items: baseline;
+    margin: 0;
     flex-wrap: nowrap;
+    min-height: 20px;
 }
 
 .terminal-embed-prompt {
@@ -81,6 +82,10 @@
     font-size: inherit;
     caret-color: #00ff00;
     min-width: 50px;
+    padding: 0;
+    margin: 0;
+    height: 20px;
+    line-height: 20px;
 }
 
 .terminal-embed-input:disabled {
@@ -97,40 +102,54 @@
    ============================================================================ */
 
 .terminal-embed-output {
-    margin: 5px 0;
+    margin: 0;
     white-space: pre-wrap;
     word-wrap: break-word;
-    color: #00cc00;
-    line-height: 1.4;
+    color: #00ff00;
+    min-height: 20px;
+    line-height: 20px;
 }
 
 .terminal-embed-error {
-    margin: 5px 0;
+    margin: 0;
     white-space: pre-wrap;
     word-wrap: break-word;
     color: #ff4444;
-    line-height: 1.4;
+    min-height: 20px;
+    line-height: 20px;
 }
 
 .terminal-embed-completions {
-    margin: 5px 0;
+    margin: 0;
     color: #00aaff;
     font-size: 13px;
+    min-height: 20px;
+    line-height: 20px;
 }
 
 /* Frozen command line (after execution) */
 .tk-terminal-frozen-line {
-    margin: 5px 0;
+    margin: 0;
+    min-height: 20px;
+    line-height: 20px;
+}
+
+.tk-terminal-frozen-prompt {
+    /* Inherits theme colors via .terminal-embed-user and .terminal-embed-path */
+}
+
+.tk-terminal-frozen-cmd {
     color: #00ff00;
 }
 
 /* Command output from processCommand */
 .tk-terminal-output {
-    margin: 2px 0;
+    margin: 0;
     white-space: pre-wrap;
     word-wrap: break-word;
     color: #00ff00;
-    line-height: 1.4;
+    min-height: 20px;
+    line-height: 20px;
     font-family: inherit;
 }
 
@@ -242,9 +261,10 @@
     box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
 }
 
+.terminal-embed.theme-green .terminal-embed-prompt,
 .terminal-embed.theme-green .terminal-embed-user,
-.terminal-embed.theme-green .terminal-embed-input,
-.terminal-embed.theme-green .terminal-embed-welcome {
+.terminal-embed.theme-green .terminal-embed-path,
+.terminal-embed.theme-green .tk-terminal-frozen-prompt {
     color: #00ff00;
 }
 
@@ -254,10 +274,10 @@
     box-shadow: 0 0 20px rgba(255, 170, 0, 0.3);
 }
 
+.terminal-embed.theme-amber .terminal-embed-prompt,
 .terminal-embed.theme-amber .terminal-embed-user,
-.terminal-embed.theme-amber .terminal-embed-input,
-.terminal-embed.theme-amber .terminal-embed-welcome,
-.terminal-embed.theme-amber .terminal-embed-output {
+.terminal-embed.theme-amber .terminal-embed-path,
+.terminal-embed.theme-amber .tk-terminal-frozen-prompt {
     color: #ffaa00;
 }
 
@@ -275,10 +295,10 @@
     box-shadow: 0 0 20px rgba(0, 170, 255, 0.3);
 }
 
+.terminal-embed.theme-blue .terminal-embed-prompt,
 .terminal-embed.theme-blue .terminal-embed-user,
-.terminal-embed.theme-blue .terminal-embed-input,
-.terminal-embed.theme-blue .terminal-embed-welcome,
-.terminal-embed.theme-blue .terminal-embed-output {
+.terminal-embed.theme-blue .terminal-embed-path,
+.terminal-embed.theme-blue .tk-terminal-frozen-prompt {
     color: #00aaff;
 }
 
@@ -296,10 +316,10 @@
     box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
 }
 
+.terminal-embed.theme-red .terminal-embed-prompt,
 .terminal-embed.theme-red .terminal-embed-user,
-.terminal-embed.theme-red .terminal-embed-input,
-.terminal-embed.theme-red .terminal-embed-welcome,
-.terminal-embed.theme-red .terminal-embed-output {
+.terminal-embed.theme-red .terminal-embed-path,
+.terminal-embed.theme-red .tk-terminal-frozen-prompt {
     color: #ff4444;
 }
 
@@ -318,15 +338,11 @@
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
+.terminal-embed.theme-white .terminal-embed-prompt,
 .terminal-embed.theme-white .terminal-embed-user,
-.terminal-embed.theme-white .terminal-embed-input,
-.terminal-embed.theme-white .terminal-embed-welcome,
-.terminal-embed.theme-white .terminal-embed-output {
+.terminal-embed.theme-white .terminal-embed-path,
+.terminal-embed.theme-white .tk-terminal-frozen-prompt {
     color: #ffffff;
-}
-
-.terminal-embed.theme-white .terminal-embed-path {
-    color: #aaaaff;
 }
 
 .terminal-embed.theme-white .terminal-embed-body {
