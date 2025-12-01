@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacking Terminal Simulator - Demo</title>
+    <link rel="stylesheet" href="../src/terminal-embed.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            color: #00ff00;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .terminal-wrapper {
+            margin-bottom: 30px;
+        }
+
+        #terminal {
+            width: 100%;
+            height: 500px;
+        }
+
+        .info-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .info-box {
+            background: rgba(0, 20, 0, 0.5);
+            border: 1px solid #004400;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .info-box h2 {
+            color: #00ff00;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-box li {
+            padding: 6px 0;
+            color: #00aa00;
+            font-size: 0.9rem;
+        }
+
+        code {
+            background: #000;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .theme-switcher {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .theme-switcher button {
+            background: #001100;
+            border: 1px solid #004400;
+            color: #00aa00;
+            padding: 8px 16px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .theme-switcher button:hover {
+            background: #002200;
+            border-color: #00ff00;
+            color: #00ff00;
+        }
+
+        .theme-switcher button.active {
+            background: #003300;
+            border-color: #00ff00;
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hacking Terminal Simulator</h1>
+            <p class="subtitle">An embedded Linux-like terminal for any webpage</p>
+        </header>
+
+        <div class="theme-switcher">
+            <button onclick="setTheme('theme-green')" class="active">Green</button>
+            <button onclick="setTheme('theme-amber')">Amber</button>
+            <button onclick="setTheme('theme-blue')">Blue</button>
+            <button onclick="setTheme('theme-red')">Red</button>
+            <button onclick="setTheme('theme-white')">White</button>
+            <button onclick="toggleScanlines()">Toggle Scanlines</button>
+        </div>
+
+        <div class="terminal-wrapper">
+            <div id="terminal"></div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-box">
+                <h2>Try These Commands</h2>
+                <ul>
+                    <li><code>help</code> - See all commands</li>
+                    <li><code>ls -la</code> - List files</li>
+                    <li><code>ssh root@gibson.ellingson.com</code></li>
+                    <li><code>nmap google.com</code></li>
+                    <li><code>ping -c 4 github.com</code></li>
+                    <li><code>cowsay "Hello!"</code></li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h2>Hacking Tools</h2>
+                <ul>
+                    <li><code>airodump-ng wlan0</code> - Scan WiFi</li>
+                    <li><code>john --wordlist=... hashes.txt</code></li>
+                    <li><code>nmap -sV target.com</code></li>
+                    <li><code>base64 -d</code> - Decode secrets</li>
+                    <li><code>cat /etc/shadow</code></li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h2>Easter Egg Hosts</h2>
+                <ul>
+                    <li><code>gibson.ellingson.com</code> - Hackers</li>
+                    <li><code>matrix.metacortex.com</code> - The Matrix</li>
+                    <li><code>wopr.norad.gov</code> - WarGames</li>
+                    <li><code>fsociety.org</code> - Mr. Robot</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { TerminalEmbed } from '../src/index.js';
+
+        TerminalEmbed.init('#terminal');
+
+        // Theme switcher
+        window.setTheme = function(theme) {
+            const terminal = document.getElementById('terminal');
+            terminal.className = terminal.className.replace(/theme-\w+/g, '');
+            terminal.classList.add(theme);
+
+            // Update active button
+            document.querySelectorAll('.theme-switcher button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase() === theme.replace('theme-', '')) {
+                    btn.classList.add('active');
+                }
+            });
+        };
+
+        window.toggleScanlines = function() {
+            const terminal = document.getElementById('terminal');
+            terminal.classList.toggle('scanlines');
+        };
+    </script>
+</body>
+</html>

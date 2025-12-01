@@ -1,0 +1,323 @@
+/* ============================================================================
+   TERMINAL KIT EMBED - Embedded Terminal Styles
+   Standalone terminal that integrates directly into any webpage
+   ============================================================================ */
+
+/* ============================================================================
+   TERMINAL CONTAINER
+   ============================================================================ */
+
+.terminal-embed {
+    background-color: #0a0a0a;
+    border: 1px solid #00ff00;
+    border-radius: 8px;
+    font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+    font-size: 14px;
+    color: #00ff00;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+}
+
+.terminal-embed-body {
+    padding: 15px;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 20, 0, 0.9) 0%,
+        rgba(0, 10, 0, 0.95) 100%
+    );
+}
+
+.terminal-embed-inner {
+    min-height: 100%;
+}
+
+/* ============================================================================
+   WELCOME MESSAGE
+   ============================================================================ */
+
+.terminal-embed-welcome {
+    color: #00ff00;
+    margin: 0 0 20px 0;
+    font-size: 12px;
+    line-height: 1.3;
+    text-shadow: 0 0 5px #00ff00;
+}
+
+/* ============================================================================
+   PROMPT AND INPUT
+   ============================================================================ */
+
+.terminal-embed-prompt-line {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    flex-wrap: nowrap;
+}
+
+.terminal-embed-prompt {
+    white-space: nowrap;
+    margin-right: 5px;
+}
+
+.terminal-embed-user {
+    color: #00ff00;
+    font-weight: bold;
+}
+
+.terminal-embed-path {
+    color: #00aaff;
+}
+
+.terminal-embed-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #00ff00;
+    font-family: inherit;
+    font-size: inherit;
+    caret-color: #00ff00;
+    min-width: 50px;
+}
+
+.terminal-embed-input:disabled {
+    color: #008800;
+}
+
+.terminal-embed-input::selection {
+    background: #004400;
+    color: #00ff00;
+}
+
+/* ============================================================================
+   OUTPUT
+   ============================================================================ */
+
+.terminal-embed-output {
+    margin: 5px 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #00cc00;
+    line-height: 1.4;
+}
+
+.terminal-embed-error {
+    margin: 5px 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #ff4444;
+    line-height: 1.4;
+}
+
+.terminal-embed-completions {
+    margin: 5px 0;
+    color: #00aaff;
+    font-size: 13px;
+}
+
+/* ============================================================================
+   SCROLLBAR
+   ============================================================================ */
+
+.terminal-embed-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal-embed-body::-webkit-scrollbar-track {
+    background: #001100;
+}
+
+.terminal-embed-body::-webkit-scrollbar-thumb {
+    background: #004400;
+    border-radius: 4px;
+}
+
+.terminal-embed-body::-webkit-scrollbar-thumb:hover {
+    background: #006600;
+}
+
+/* ============================================================================
+   SCANLINE EFFECT (OPTIONAL)
+   ============================================================================ */
+
+.terminal-embed.scanlines::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.terminal-embed.scanlines {
+    position: relative;
+}
+
+/* ============================================================================
+   SIZE PRESETS
+   ============================================================================ */
+
+.terminal-embed.small {
+    height: 300px;
+}
+
+.terminal-embed.medium {
+    height: 450px;
+}
+
+.terminal-embed.large {
+    height: 600px;
+}
+
+.terminal-embed.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    z-index: 9999;
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+
+@media (max-width: 768px) {
+    .terminal-embed {
+        font-size: 13px;
+        border-radius: 4px;
+    }
+
+    .terminal-embed-body {
+        padding: 10px;
+    }
+
+    .terminal-embed-welcome {
+        font-size: 10px;
+    }
+
+    .terminal-embed-input {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+}
+
+/* ============================================================================
+   THEMES
+   ============================================================================ */
+
+/* Classic Green (default) */
+.terminal-embed.theme-green {
+    border-color: #00ff00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+}
+
+.terminal-embed.theme-green .terminal-embed-user,
+.terminal-embed.theme-green .terminal-embed-input,
+.terminal-embed.theme-green .terminal-embed-welcome {
+    color: #00ff00;
+}
+
+/* Amber/Orange */
+.terminal-embed.theme-amber {
+    border-color: #ffaa00;
+    box-shadow: 0 0 20px rgba(255, 170, 0, 0.3);
+}
+
+.terminal-embed.theme-amber .terminal-embed-user,
+.terminal-embed.theme-amber .terminal-embed-input,
+.terminal-embed.theme-amber .terminal-embed-welcome,
+.terminal-embed.theme-amber .terminal-embed-output {
+    color: #ffaa00;
+}
+
+.terminal-embed.theme-amber .terminal-embed-body {
+    background: linear-gradient(
+        180deg,
+        rgba(20, 15, 0, 0.9) 0%,
+        rgba(10, 8, 0, 0.95) 100%
+    );
+}
+
+/* Blue/Cyan */
+.terminal-embed.theme-blue {
+    border-color: #00aaff;
+    box-shadow: 0 0 20px rgba(0, 170, 255, 0.3);
+}
+
+.terminal-embed.theme-blue .terminal-embed-user,
+.terminal-embed.theme-blue .terminal-embed-input,
+.terminal-embed.theme-blue .terminal-embed-welcome,
+.terminal-embed.theme-blue .terminal-embed-output {
+    color: #00aaff;
+}
+
+.terminal-embed.theme-blue .terminal-embed-body {
+    background: linear-gradient(
+        180deg,
+        rgba(0, 10, 20, 0.9) 0%,
+        rgba(0, 5, 10, 0.95) 100%
+    );
+}
+
+/* Red/Hacker */
+.terminal-embed.theme-red {
+    border-color: #ff0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+}
+
+.terminal-embed.theme-red .terminal-embed-user,
+.terminal-embed.theme-red .terminal-embed-input,
+.terminal-embed.theme-red .terminal-embed-welcome,
+.terminal-embed.theme-red .terminal-embed-output {
+    color: #ff4444;
+}
+
+.terminal-embed.theme-red .terminal-embed-body {
+    background: linear-gradient(
+        180deg,
+        rgba(20, 0, 0, 0.9) 0%,
+        rgba(10, 0, 0, 0.95) 100%
+    );
+}
+
+/* White/Light */
+.terminal-embed.theme-white {
+    background-color: #1a1a1a;
+    border-color: #ffffff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.terminal-embed.theme-white .terminal-embed-user,
+.terminal-embed.theme-white .terminal-embed-input,
+.terminal-embed.theme-white .terminal-embed-welcome,
+.terminal-embed.theme-white .terminal-embed-output {
+    color: #ffffff;
+}
+
+.terminal-embed.theme-white .terminal-embed-path {
+    color: #aaaaff;
+}
+
+.terminal-embed.theme-white .terminal-embed-body {
+    background: linear-gradient(
+        180deg,
+        rgba(30, 30, 30, 0.9) 0%,
+        rgba(20, 20, 20, 0.95) 100%
+    );
+}
