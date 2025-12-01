@@ -65,11 +65,10 @@
 
 .terminal-embed-user {
     color: #00ff00;
-    font-weight: bold;
 }
 
 .terminal-embed-path {
-    color: #00aaff;
+    color: #00ff00;
 }
 
 .terminal-embed-input {
