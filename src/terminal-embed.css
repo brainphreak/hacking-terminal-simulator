@@ -125,6 +125,16 @@
     color: #008800;
 }
 
+/* Command output from processCommand */
+.tk-terminal-output {
+    margin: 2px 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #00cc00;
+    line-height: 1.4;
+    font-family: inherit;
+}
+
 /* ============================================================================
    SCROLLBAR
    ============================================================================ */

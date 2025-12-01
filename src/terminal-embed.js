@@ -256,14 +256,10 @@ async function executeCommand() {
         };
 
         const result = await processCommand(command, ctx);
-        console.log('[TerminalEmbed] Command result:', result ? result.substring(0, 100) : '(empty)');
+        console.log('[TerminalEmbed] Command completed, cwd:', result?.currentDirectory);
 
-        if (result && result.trim()) {
-            const output = document.createElement('pre');
-            output.className = 'terminal-embed-output';
-            output.textContent = result;
-            terminalInnerContent.appendChild(output);
-        }
+        // processCommand writes output directly to the DOM
+        // result contains { currentDirectory, previousDirectory }
     } catch (err) {
         console.error('[TerminalEmbed] Command error:', err);
         const errorOutput = document.createElement('pre');
