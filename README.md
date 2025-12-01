@@ -315,7 +315,7 @@ This project is licensed under the GPLv3 License.
 
 ## Credits
 
-Created by [The Black Packet](https://theblackpacket.com)
+Created by [brainphreak](https://brainphreak.net)
 
 ## Contributing
 
