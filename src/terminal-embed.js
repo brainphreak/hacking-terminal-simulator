@@ -111,7 +111,7 @@ function createNewPrompt() {
     promptLine.className = 'terminal-embed-prompt-line';
 
     const promptSpan = document.createElement('span');
-    promptSpan.className = 'terminal-embed-prompt';
+    promptSpan.className = 'terminal-embed-prompt tk-terminal-prompt';
     promptSpan.innerHTML = `<span class="terminal-embed-user">${environment.USER}@${environment.HOSTNAME}</span>:<span class="terminal-embed-path">${getDisplayPath()}</span>$ `;
 
     const input = document.createElement('input');
@@ -233,12 +233,17 @@ async function executeCommand() {
     try {
         const ctx = {
             outputElement: terminalInnerContent,
+            terminalBody: terminalBody,
+            terminalInnerContent: terminalInnerContent,
+            currentInput: currentInputElement,
+            commandHistory: commandHistory,
+            username: environment.USER,
+            getDisplayPath: getDisplayPath,
+            getPromptText: () => `${environment.USER}@${environment.HOSTNAME}:${getDisplayPath()}$ `,
             setNewCurrentDirectory: (newDir, oldDir) => {
                 environment.OLDPWD = oldDir;
                 environment.CWD = newDir;
             },
-            terminalBody: terminalBody,
-            terminalInnerContent: terminalInnerContent,
             waitKey: async () => {
                 return new Promise((resolve) => {
                     const handler = (e) => {
