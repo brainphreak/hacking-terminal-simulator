@@ -180,13 +180,22 @@
     <script type="module">
         import { TerminalEmbed } from '../src/index.js';
 
-        TerminalEmbed.init('#terminal');
+        try {
+            TerminalEmbed.init('#terminal');
+            console.log('Terminal initialized successfully');
+        } catch (err) {
+            console.error('Failed to initialize terminal:', err);
+            document.getElementById('terminal').innerHTML = '<p style="color: red; padding: 20px;">Error: ' + err.message + '</p>';
+        }
 
         // Theme switcher
         window.setTheme = function(theme) {
             const terminal = document.getElementById('terminal');
-            terminal.className = terminal.className.replace(/theme-\w+/g, '');
-            terminal.classList.add(theme);
+            // Keep terminal-embed class
+            const classes = ['terminal-embed'];
+            if (terminal.classList.contains('scanlines')) classes.push('scanlines');
+            classes.push(theme);
+            terminal.className = classes.join(' ');
 
             // Update active button
             document.querySelectorAll('.theme-switcher button').forEach(btn => {

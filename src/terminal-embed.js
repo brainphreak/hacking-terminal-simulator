@@ -209,6 +209,8 @@ async function executeCommand() {
     const command = currentInputElement.value.trim();
     currentInputElement.disabled = true;
 
+    console.log('[TerminalEmbed] Executing command:', command);
+
     if (command) {
         commandHistory.push(command);
         addToHistory(command);
@@ -249,6 +251,7 @@ async function executeCommand() {
         };
 
         const result = await processCommand(command, ctx);
+        console.log('[TerminalEmbed] Command result:', result ? result.substring(0, 100) : '(empty)');
 
         if (result && result.trim()) {
             const output = document.createElement('pre');
@@ -257,6 +260,7 @@ async function executeCommand() {
             terminalInnerContent.appendChild(output);
         }
     } catch (err) {
+        console.error('[TerminalEmbed] Command error:', err);
         const errorOutput = document.createElement('pre');
         errorOutput.className = 'terminal-embed-error';
         errorOutput.textContent = `Error: ${err.message}`;
